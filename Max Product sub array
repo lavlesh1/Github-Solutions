@@ -1,0 +1,50 @@
+Leetcode No:- 152(Medium)
+
+Question problem says that return an sub array having the product as maxium.
+
+So 1st approach that comes to mind is the brute force approach
+Brute force approach:-
+Iterate through entire array & generate all the sub array and compare each individual product by asked product if its equal then return the sub array as the ans.
+Pseudo Code:-
+
+\*
+maxi=Int_MIN;
+for(i=0-->n){
+product =0;
+for(j=i-->n){
+Product=product*arr[i];
+}
+max=max(maxi,Product);
+}
+}
+*/
+
+Time Complexity will be O(n^2) because will are running a two loop which are approximately iterating through entire array having n value.
+Space complexity will be O(1) because we are not taking any extra space to solve the problem.
+
+To optimise the time complexity the optimal approach will be:-
+Optimal aprroach:-It's basically a observation based so assume that  1.if array has all positive integer in it then the answer will be the array itself.
+                                                                     2.if array has even no of negative integer and rest all has positive than too array will be the answer , because negative * negative gives posiive value.
+                                                                     3. if array has odd positive integer and rest all postive integer than ignore one of the negative element and then the prefix or suffix value from that ignored 
+                                                                        element will be the answer.
+                                                                     4.if the element has 0 has element in the array the the sub array before and after zero will be considered to solve the question because  product with 0 gives 0 whivh is not maxium.
+Code:-
+class Solution {
+    public int maxProduct(int[] nums) {
+         int n = nums.length; //size of array.
+
+        int pre = 1, suff = 1;
+        int ans = Integer.MIN_VALUE;
+        for (int i = 0; i < n; i++) {
+            if (pre == 0) pre = 1;
+            if (suff == 0) suff = 1;
+            pre *= nums[i];
+            suff *= nums[n - i - 1];
+            ans = Math.max(ans, Math.max(pre, suff));
+        }
+        return ans;
+    }
+}
+Time Complexity is O(N) because we are iterating through entire only one time to solve the problem.
+Space Complexity isO(1)
+
