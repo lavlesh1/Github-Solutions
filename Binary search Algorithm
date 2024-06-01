@@ -1,0 +1,63 @@
+Binary Serach:- An algorithm searching in a limited search space.(Like Dicitionary linits wors from A--Z only).
+Leetcode problem :-704 (Easy).
+
+Problem is to search for the no in a given array:- Two Approach 1. Iterative Approach.
+                                                                2. Recursive Approach.
+
+Iterative Approach it's very simple U have to iterate through given sorted array and search for no and return but for doing so what binary search says take a low=0; high=n-1; or low as first element of the array which is at
+0 index and high at last element which is at n-1 index where n is the size of the array.
+So what we do in binary search is we count mid = (low + high)/2= floor(mid)
+And whatever is the mid value check it for the target value if both are equal then mid is our ans, if not Pseudo code is
+f(int [] arr,int target,int n){
+int low=0;
+int high=n-1;
+while(low<=high){
+mid=(low+high)/2;
+if(arr[mid]==target) return mid;
+else if(target> arr[mid]) low=mid+1;
+else{
+high=mid-1;
+}
+return -1;
+}
+
+Code In Java :-
+class Solution {
+    public static int search(int[] nums, int target) {
+        int n = nums.length; //size of the array.
+        int low = 0, high = n - 1;
+
+        // Perform the steps:
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            if (nums[mid] == target) return mid;
+            else if (target > nums[mid]) low = mid + 1;
+            else high = mid - 1;
+        }
+        return -1;
+    }
+    }
+T.C--O(log base 2 N)--|
+                        ----for both approaches.
+S.C--O(1)-------------|
+
+Recursive approach is also bit simple if you know how recursion you can easily solve this problem.
+
+Pseudo code:-f(arr,low,high,target){
+if(low>high){
+return -1;
+}
+mid=(low+high)/2;
+if(mid==target){
+return mid;
+}
+else if(target>mid){
+return f(arr,mid+1,high,target) 
+}
+else{
+return f(arr,low,mid-1,target)
+}
+
+I hope I have been able to explain the code and both of the approaches hope u like it..
+
+
