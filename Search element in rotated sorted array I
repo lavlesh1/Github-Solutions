@@ -1,0 +1,65 @@
+Intuition:-
+
+The approach is quite simple to find solution in less than O(n) time complexity that is approx O(log n) and if array is sorted the we can solve it using binary search algorithm.
+
+Approach:-
+
+Though the array is rotated, we can clearly notice that for every index, one of the 2 halves will always be sorted. In the above example, the right half of the index mid is sorted.
+So, to efficiently search for a target value using this observation, we will follow a simple two-step process.
+First, we identify the sorted half of the array. 
+Once found, we determine if the target is located within this sorted half. 
+    If not, we eliminate that half from further consideration. 
+    Conversely, if the target does exist in the sorted half, we eliminate the other half.
+
+Complexity:-
+
+    Time complexity:--O(log base 2 N)==logn
+    Space complexity:O(1)
+    Though we are not using any extra space to solve the problem the space complexity is 1
+
+Code
+
+class Solution
+{
+    public int search(int[] nums,int target)
+    {
+        if(nums == null || nums.length == 0)
+        {
+            return -1;
+        
+    }
+        int left = 0,right = nums.length-1;
+        while (left<=right)
+        {
+            int mid = (left+right)/2;
+            if (target == nums[mid])
+            {
+                return mid;
+            }
+            if (nums[left]<=nums[mid]) 
+            {
+                if (nums[left]<=target && target <nums[mid])
+                {
+                    right = mid -1;    
+                }  
+                else
+                  {
+                     left =mid+1;
+                 } 
+            
+             }
+             else
+            {
+                if (nums[mid] < target && target <= nums[right] )
+                {
+                     left =mid + 1;
+                }
+                else
+                {
+                    right = mid-1;
+                }
+             }
+        }
+            return -1;
+        }
+    }
