@@ -1,0 +1,73 @@
+Intuition
+
+We are going to use the Binary Search algorithm to optimize the approach.
+The primary objective of the Binary Search algorithm is to efficiently determine the appropriate half to eliminate, thereby reducing the search space by half.
+It does this by determining a specific condition that ensures that the target is not present in that half.
+Now, we are not given any sorted array on which we can apply binary search. But, if we observe closely, we can notice that our answer space i.e. [1, max(a[])] is sorted. So, we will apply binary search on the answer space.
+
+Approach
+
+    Find the maximum element in the given array i.e. max(a[]).
+    Place the 2 pointers i.e. low and high: Initially, we will place the pointers. The pointer low will point to 1 and the high will point to max(a[]).
+    Calculate the ‘mid’: Now, inside the loop, we will calculate the value of ‘mid’ using the following formula:
+    mid = (low+high) // 2 ( ‘//’ refers to integer division)
+    Eliminate the halves based on the time required if Koko eats ‘mid’ bananas/hr:
+        Calculate the total time(required to consume all the bananas in the array) i.e. totalH using the function calculateTotalHours(a[], mid):
+            If totalH <= h: On satisfying this condition, we can conclude that the number ‘mid’ is one of our possible answers. But we want the minimum number. So, we will eliminate the right half and consider the left half(i.e. high = mid-1).
+            Otherwise, the value mid is smaller than the number we want(as the totalH > h). This means the numbers greater than ‘mid’ should be considered and the right half of ‘mid’ consists of such numbers. So, we will eliminate the left half and consider the right half(i.e. low = mid+1).
+    Finally, outside the loop, we will return the value of low as the pointer will be pointing to the answer.
+    The steps from 2-4 will be inside a loop and the loop will continue until low crosses high.
+    Note: Please make sure to refer to the video and try out some test cases of your own to understand, how the pointer ‘low’ will be always pointing to the answer in this case. This is also the reason we have not used any extra variable here to store the answer.
+
+calculateTotalHours(a[], hourly):
+- a[] -> the given array
+- Hourly -> the possible number of bananas, Koko will eat in an hour.
+- Iterate every pile of the given array using a loop(say i).
+- For every pile i, calculate the hour i.e. ceil(v[i] / hourly), and add it to the total hours.
+- Finally, return the total hours.
+Complexity
+
+Time Complexity: O(N * log(max(a[]))), where max(a[]) is the maximum element in the array and N = size of the array.
+Reason: We are applying Binary search for the range [1, max(a[])], and for every value of ‘mid’, we are traversing the entire array inside the function named calculateTotalHours().
+
+Space Complexity: O(1) as we are not using any extra space to solve this problem
+Code(JAVA)
+
+class Solution {
+    public static int findMax(int[] v) {
+        int maxi = Integer.MIN_VALUE;;
+        int n = v.length;
+        //find the maximum:
+        for (int i = 0; i < n; i++) {
+            maxi = Math.max(maxi, v[i]);
+        }
+        return maxi;
+    }
+
+    public static int calculateTotalHours(int[] v, int h) {
+        int totalH = 0;
+        int n = v.length;
+        //find total hours:
+        for (int i = 0; i < n; i++) {
+            totalH += Math.ceil((double)(v[i]) / (double)(h));
+        }
+        return totalH;
+    }
+
+    
+    public int minEatingSpeed(int[] v, int h) {
+        int low = 1, high = findMax(v);
+
+        //apply binary search:
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            int totalH = calculateTotalHours(v, mid);
+            if (totalH <= h) {
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return low;
+    }
+}
