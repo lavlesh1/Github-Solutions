@@ -1,1 +1,1 @@
-# Github-Solutions
+# Leetcode-Solutions
