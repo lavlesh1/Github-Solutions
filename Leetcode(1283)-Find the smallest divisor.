@@ -1,0 +1,76 @@
+Problem Statement :- Given an array of integers nums and an integer threshold, we will choose a positive integer divisor, divide all the array by it, and sum the division's result. 
+Find the smallest divisor such that the result mentioned above is less than or equal to threshold.Each result of the division is rounded to the nearest integer greater than or equal to that element. 
+For example: 7/3 = 3 and 10/2 = 5).The test cases are generated so that there will be an answer.
+
+Approach/Intution:-
+To convert this into a set of points:
+
+1. **Threshold Check:**
+   - If \( n > \text{threshold} \), return -1.
+2. **Finding Maximum Element:**
+   - Find the maximum element \( \text{max}(arr[]) \) in the given array.
+3. **Pointer Placement:**
+   - Initialize two pointers, `low` pointing to 1 and `high` pointing to \( \text{max}(arr[]) \).
+4. **Calculating Mid:**
+   - Calculate the mid using \( \text{mid} = \frac{{\text{low} + \text{high}}}{2} \) (integer division).
+5. **Eliminating Halves:**
+   - Pass `mid` to the `sumByD()` function.
+     - If the result is less than or equal to the threshold:
+       - Update `high = mid - 1`.
+     - Otherwise:
+       - Update `low = mid + 1`.
+6. **Returning Result:**
+   - After the loop, return the value of `low`.
+
+The loop from step 4-5 continues until `low` crosses `high`.
+
+For the `sumByD()` function:
+1. **Iterating Over Array:**
+   - Iterate over the array.
+2. **Calculating Ceiling Values:**
+   - Divide each element by `div` and take the ceiling value.
+3. **Summing Up:**
+   - Sum up the ceiling values.
+4. **Returning Summation:**
+   - Return the summation.
+
+Code:-
+class Solution {
+    public static int sumByD(int[] arr, int div) {
+        int n = arr.length; //size of array
+        //Find the summation of division values:
+        int sum = 0;
+        for (int i = 0; i < n; i++) {
+            sum += Math.ceil((double)(arr[i]) / (double)(div));
+        }
+        return sum;
+    }
+    public int smallestDivisor(int[] arr, int limit) {
+        int n = arr.length; //size of array.
+        if(n > limit) return -1;
+        //Find the maximum element:
+        int maxi = Integer.MIN_VALUE;
+        for (int i = 0; i < n; i++) {
+            maxi = Math.max(maxi, arr[i]);
+        }
+
+        int low = 1, high = maxi;
+
+        //Apply binary search:
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            if (sumByD(arr, mid) <= limit) {
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return low;
+        
+    }
+}
+
+TimeComplexity :- O(log(max(arr[]))*N), where max(arr[]) = maximum element in the array, N = size of the array.
+Reason: We are applying binary search on our answers that are in the range of [1, max(arr[])]. For every possible divisor ‘mid’, we call the sumByD() function. Inside that function, we are traversing the entire array, which results in O(N).
+
+Space Complexity: O(1) as we are not using any extra space to solve this problem.
