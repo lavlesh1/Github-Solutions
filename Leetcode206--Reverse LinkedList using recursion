@@ -1,0 +1,90 @@
+  
+Intuition
+
+Recursive
+
+- Ensure solid understanding of recursion fundamentals before proceeding.
+- Recursion breaks down problems into smaller solvable parts until reaching the base case.
+- The base case represents the smallest solvable unit.
+- For reversing a linked list with 4 nodes, recursion starts with smaller subproblems (3 nodes, then 2, and so on) until reaching the base case of 1 node.
+- Reversing a single-node linked list is straightforward, as it's already reversed.
+Approach
+
+Base Cases:
+
+    Check if the linked list is empty or contains only one node; if so, return the head as it's already reversed.
+    Recursively reverse the linked list starting from the second node onwards.
+    Preserve access to remaining nodes by storing a reference to the next node.
+    Reverse the direction of links by adjusting pointers.
+    Break the link from the current head to the front node to prevent cyclic references.
+    Return the new head of the reversed linked list.
+
+Complexity
+
+    Time complexity:
+    O(N) This is because we traverse the linked list twice: once to push the values onto the stack, and once to pop the values and update the linked list. Both traversals take O(N) time.
+
+Space Complexity : O(1) No additional space is used explicitly for data structures or allocations during the linked list reversal process. However, it's important to note that there is an implicit use of stack space due to recursion. This recursive stack space stores function calls and associated variables during the recursive traversal and reversal of the linked list. Despite this, no extra memory beyond the program's existing execution space is allocated, hence maintaining a space complexity of O(1).
+Code
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    class Node {
+    // Data stored in the node
+    int data;      
+    // Pointer to the next
+    // node in the list
+    Node next;     
+
+    // Constructor with both data
+    // and next node as parameters
+    Node(int data, Node next) {
+        this.data = data;
+        this.next = next;
+    }
+
+    // Constructor with only data as
+    // a parameter, sets next to null
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+    public ListNode reverseList(ListNode head) {
+         if (head == null || head.next == null) {
+            return head;
+        }
+        
+        // Recursive step:
+        // Reverse the linked list starting
+        // from the second node (head.next).
+        ListNode newHead = reverseList(head.next);
+        
+        // Save a reference to the node following
+        // the current 'head' node.
+        ListNode front = head.next;
+        
+        // Make the 'front' node point to the current
+        // 'head' node in the reversed order.
+        front.next = head;
+        
+        // Break the link from the current 'head' node
+        // to the 'front' node to avoid cycles.
+        head.next = null;
+        
+        // Return the 'newHead,' which is the new
+        // head of the reversed linked list.
+        return newHead;
+        
+    }
+}
+
