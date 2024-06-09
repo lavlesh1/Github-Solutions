@@ -1,0 +1,84 @@
+Odd Even Linked List
+lavleshsingh475
+
+Java
+Intuition
+
+So basically in this question it is asked to segrregate odd and even nodes in a linked list , so intuition is to first find all the elements and change the links for all odd index.
+And after that serach for even index and change the link between them also and after successfull link changing change the link of last odd index .next with 1st even index.
+Approach
+
+Algorithm is quite simple :-
+
+    Check for the base case if head== null or head.next == null, then simply return head.
+    2)Now assign odd has head and even has head.next & assign a new head to even index which is evenHead.
+    3)Now check for the case whether the even pointer has reached null or even.next pointer has reached null.
+    4)Now change the links between odd and even index.
+    5)After successfull linking odd index with odd and even index with even index , link evenHead with last odd index or odd.next.
+
+Complexity
+
+    Time complexity:
+
+O(N)
+
+    Space complexity:
+
+O(1)
+Code
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    class Node {
+    // Data stored in the node
+    int data; 
+     // Pointer to the next node in the list
+    Node next;     
+
+    // Constructor with both data
+    // and next node as parameters
+    Node(int data, Node next) {
+        this.data = data;
+        this.next = next;
+    }
+
+    // Constructor with only data as
+    // a parameter, sets next to null
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+
+    // Constructor with only data as
+    // a parameter, sets next to null
+   
+    public ListNode oddEvenList(ListNode head) {
+
+        if (head == null || head.next == null) {return head;}
+
+        ListNode odd = head;
+        ListNode even=head.next;
+        ListNode evenHead=head.next;
+        while(even!=null && even.next!=null){
+             odd.next=odd.next.next;
+             even.next=even.next.next;
+            odd=odd.next;
+            even=even.next;
+        }
+        odd.next=evenHead;
+        return head;
+        
+    }
+}
+
