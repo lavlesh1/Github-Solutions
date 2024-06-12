@@ -1,0 +1,114 @@
+61-Rotate List
+Reach out for better approach--lavleshsingh475@gmail.com
+
+Java
+Intuition
+
+Problem Statement: Given the head of a linked list, rotate the list to the right by k places.
+
+Examples:
+
+Example 1:
+Input:
+head = [1,2,3,4,5]
+k = 2
+Output:
+head = [4,5,1,2,3]
+Explanation:
+We have to rotate the list to the right twice.
+Approach
+
+Let’s take an example.
+
+head = [1,2,3,4,5] k = 2000000000
+
+If we see a brute force approach, it will take O(5*2000000000) which is not a good time complexity when we can optimize it.
+
+We can see that for every k which is multiple of the length of the list, we get back the original list. Try to operate brute force on any linked list for k as a multiple of the length of the list.
+
+This gives us a hint that for k greater than the length of the list, we have to rotate the list for k%length of the list. This reduces our time complexity.
+
+Steps to the algorithm:-
+
+Calculate the length of the list.
+Connect the last node to the first node, converting it to a circular linked list.
+Iterate to cut the link of the last node and start a node of k%length of the list rotated list.
+
+Complexity
+
+    Time complexity:
+
+O(length of list) + O(length of list - (length of list%k))
+
+    Space complexity:
+
+O(1)
+
+Reason: No extra data structure is used for computation.
+
+Code
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    class Node {
+    // Data stored in the node
+    int data; 
+     // Pointer to the next node in the list
+    Node next;     
+
+    // Constructor with both data
+    // and next node as parameters
+    Node(int data, Node next) {
+        this.data = data;
+        this.next = next;
+    }
+
+    // Constructor with only data as
+    // a parameter, sets next to null
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+    static ListNode insertNode(ListNode head,int val) {
+    ListNode newNode = new ListNode(val);
+    if(head == null) {
+        head = newNode;
+        return head;
+    }
+    ListNode temp = head;
+    while(temp.next != null) temp = temp.next;
+    
+    temp.next = newNode;
+    return head;
+}
+    public ListNode rotateRight(ListNode head, int k) {
+        if(head == null||head.next == null||k == 0) return head;
+    //calculating length
+    ListNode temp = head;
+    int length = 1;
+    while(temp.next != null) {
+        ++length;
+        temp = temp.next;
+    }
+    //link last node to first node
+    temp.next = head;
+    k = k%length; //when k is more than length of list
+    int end = length-k; //to get end of the list
+    while(end--!=0) temp = temp.next;
+    //breaking last node link and pointing to NULL
+    head = temp.next;
+    temp.next = null;
+        
+    return head;
+    }
+}
