@@ -1,0 +1,84 @@
+Implement queue using stack
+lavleshsingh475@gmail.com
+
+Java
+Intuition
+
+Given a Stack having some elements stored in it. Can you implement a
+Queue using the given Stack?
+
+Queue: A Queue is a linear data structure that works on the basis of FIFO(First in First out). This means the element added at first will be removed first from the Queue.
+Approach
+
+Approach :
+
+Push()->
+add x-->input
+
+Pop()->
+if(ouput!=empty){
+output.pop}
+else{
+input-->output
+output.pop}
+
+top()->
+if(ouput!=empty){
+output.top}
+else{
+input-->output
+output.top}
+
+Size():
+return (output.size() + input.size());
+Complexity
+
+    Time complexity:O(N)
+
+    Space complexity:O(2N)
+
+Code
+
+class MyQueue {
+     Stack < Integer > input = new Stack < > ();
+    Stack < Integer > output = new Stack < > ();
+    public void push(int x) {
+        input.push(x);
+
+    }
+    public int pop() {
+        if (output.empty())
+            while (input.empty() == false) {
+                output.push(input.peek());
+                input.pop();
+            }
+
+
+        int x = output.peek();
+        output.pop();
+        return x;
+    }
+    public int peek() {
+        if (output.empty())
+            while (input.empty() == false) {
+                output.push(input.peek());
+                input.pop();
+            }
+        return output.peek();
+    }
+    
+    public boolean empty() {
+        return input.isEmpty() && output.isEmpty();
+
+    }
+
+}
+
+/**
+ * Your MyQueue object will be instantiated and called as such:
+ * MyQueue obj = new MyQueue();
+ * obj.push(x);
+ * int param_2 = obj.pop();
+ * int param_3 = obj.peek();
+ * boolean param_4 = obj.empty();
+ */
