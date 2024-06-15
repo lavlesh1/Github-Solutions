@@ -1,0 +1,65 @@
+Binary Inorder Traversal
+lavleshsingh475@gmail.com
+Java
+Intuition
+
+Inorder traversal stands as one of the depth-first traversal techniques for navigating nodes in a binary tree.
+The method starts by exploring the left subtree recursively in the following order: left child, root node, right child.
+Initially, it traverses the left subtree until reaching the leftmost node.
+Upon reaching a null node, signifying the end of a subtree, the recursive process halts.
+Then we visit the current node that had invoked the inorder on its left child.
+After visiting the current node we visit the right subtree in the inorder manner as well.
+Approach
+
+Step 1: Check for base case that if the current node is null, return the void function.
+
+Step 2: Invoke the inorder function on the left child to traverse the entire left subtree first.
+
+Step 3: Push the value of the current node into the preorder traversal array.
+
+Step 4: After visiting the current node, we invoke the inorder function on the right child to traverse the right subtree in the end.
+
+Code
+Complexity
+
+    Time complexity:
+
+O(N)
+
+    Space complexity:
+
+O(N)
+Code
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+         List<Integer> arr = new ArrayList<>();
+
+        inorder(root, arr);
+        return arr;        
+    }
+    private static void inorder(TreeNode node, List<Integer> arr)
+    {
+        if(node==null)
+        {return ;}
+    inorder(node.left,arr);
+    arr.add(node.val);
+    inorder(node.right,arr);
+    }
+}
+
